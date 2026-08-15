@@ -1,4 +1,4 @@
-// 1. Fungsi Input dengan Validasi Ketat (Defensive Programming)
+// 1. Fungsi Input dengan Validasi Berlapis
 function getHumanChoice() {
   let isValid = false;
   let choice = "";
@@ -6,22 +6,29 @@ function getHumanChoice() {
   while (!isValid) {
     let input = prompt("Pilih senjatamu: rock, paper, atau scissors?");
     
-    // Cegah sistem crash jika pemain menekan 'Cancel' atau 'ESC'
+    // Evaluasi 1: Cegah sistem crash jika pemain menekan 'Cancel'
     if (input === null) {
       console.warn("Game dihentikan paksa oleh pemain.");
       return null; 
     }
 
-    // Normalisasi input
+    // Normalisasi input (trim akan mengubah input yang isinya hanya spasi menjadi string kosong)
     choice = input.toLowerCase().trim();
 
-    // Gerbang keamanan
-    if (choice === "rock" || choice === "paper" || choice === "scissors") {
-      isValid = true;
-    } else {
-      alert("Input Ditolak! Kamu hanya boleh mengetik: rock, paper, atau scissors.");
+    // Evaluasi 2 (BARU): Jika input kosong
+    if (choice === "") {
+      alert("Kosong, tolong masukkan inputnya yang sesuai!");
+    }
+    // Evaluasi 3: Jika input benar
+    else if (choice === "rock" || choice === "paper" || choice === "scissors") {
+      isValid = true; // Gembok terbuka, keluar dari loop
+    } 
+    // Evaluasi 4: Jika input selain dari ketiga kata tersebut
+    else {
+      alert(`Input "${choice}" ditolak! Kamu hanya boleh mengetik: rock, paper, atau scissors.`);
     }
   }
+  
   return choice;
 }
 
